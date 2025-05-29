@@ -44,12 +44,6 @@
     button:hover {
       background-color: #0056b3;
     }
-    .divider {
-      margin: 20px 0;
-      text-align: center;
-      font-size: 13px;
-      color: #aaa;
-    }
   </style>
 </head>
 <body>
@@ -58,11 +52,6 @@
     <input type="text" id="login-username" placeholder="Kullanıcı Adı" />
     <input type="password" id="login-password" placeholder="Şifre" />
     <button onclick="girisYap()">Giriş Yap</button>
-
-    <div class="divider">veya kayıt ol</div>
-
-    <input type="text" id="signup-username" placeholder="Yeni Kullanıcı Adı" />
-    <input type="password" id="signup-password" placeholder="Yeni Şifre" />
     <button onclick="uyeOl()">Üye Ol</button>
   </div>
 
@@ -84,7 +73,7 @@
       .then(data => {
         if (data.success) {
           alert("Giriş başarılı!");
-          // Buraya yönlendirme ekleyebilirsin
+          // Yönlendirme ekleyebilirsin
         } else {
           alert("Hatalı kullanıcı adı veya şifre.");
         }
@@ -93,10 +82,10 @@
     }
 
     function uyeOl() {
-      const username = document.getElementById("signup-username").value.trim();
-      const password = document.getElementById("signup-password").value.trim();
+      const username = document.getElementById("login-username").value.trim();
+      const password = document.getElementById("login-password").value.trim();
 
-      if (!username || !password) return alert("Lütfen tüm alanları doldurun.");
+      if (!username || !password) return alert("Lütfen önce kullanıcı adı ve şifre girin.");
 
       fetch(scriptURL, {
         method: "POST",
