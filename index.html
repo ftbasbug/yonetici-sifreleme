@@ -1,122 +1,126 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Yönetici Girişi</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      padding: 20px;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
-
-    .login-container {
+    .container {
       background: white;
       padding: 30px;
-      max-width: 400px;
-      margin: auto;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 320px;
     }
-
-    input[type="text"], input[type="password"] {
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
       width: 100%;
       padding: 10px;
-      margin-top: 10px;
+      margin: 6px 0;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
     }
-
     button {
-      padding: 10px;
       width: 100%;
+      padding: 10px;
       margin-top: 10px;
-      background-color: #4CAF50;
-      color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: white;
       cursor: pointer;
     }
-
-    .error {
-      color: red;
-      margin-top: 10px;
-      font-size: 0.9em;
+    button:hover {
+      background-color: #0056b3;
     }
-
-    .register-box {
-      margin-top: 15px;
+    .small {
+      font-size: 12px;
       text-align: center;
-      font-size: 0.85em;
+      margin-top: 10px;
       color: #666;
     }
-
-    .register-box button {
-      background-color: transparent;
-      color: #2196F3;
-      border: none;
-      padding: 0;
-      font-size: 0.85em;
-      cursor: pointer;
-      text-decoration: underline;
-      margin-top: 5px;
-    }
-
-    .register-box button:hover {
-      color: #0b7dda;
+    .divider {
+      margin: 20px 0;
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h2>Yönetici Giriş</h2>
+    <input type="text" id="login-username" placeholder="Kullanıcı Adı" />
+    <input type="password" id="login-password" placeholder="Şifre" />
+    <button onclick="girisYap()">Giriş Yap</button>
 
-<div class="login-container">
-  <h2>Yönetici Girişi</h2>
-  <form id="adminLoginForm">
-    <input type="text" id="username" placeholder="Kullanıcı Adı" required>
-    <input type="password" id="password" placeholder="Şifre" required>
-    <button type="submit">Giriş Yap</button>
-    <p class="error" id="errorMsg"></p>
-  </form>
+    <div class="divider">veya kayıt ol</div>
 
-  <!-- Minimal Üye Ol Kutusu -->
-  <div class="register-box">
-    <span>Hesabınız yok mu?</span><br>
-    <button onclick="window.location.href='yonetici-uye-ol.html'">Üye Ol</button>
+    <input type="text" id="signup-username" placeholder="Yeni Kullanıcı Adı" />
+    <input type="password" id="signup-password" placeholder="Yeni Şifre" />
+    <button onclick="uyeOl()">Üye Ol</button>
+
+    <div class="small">Zaten hesabınız yok mu? Yukarıdan oluşturabilirsiniz.</div>
   </div>
-</div>
 
-<script>
-  const form = document.getElementById("adminLoginForm");
-  const errorMsg = document.getElementById("errorMsg");
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzGdCOMbeVJ1QT57_TKFWy4FmP6hBRUaxLgG4DfxvuEkSsqLyW3SH2GuRRCMkK-z1Um8g/exec';
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    function girisYap() {
+      const username = document.getElementById("login-username").value.trim();
+      const password = document.getElementById("login-password").value.trim();
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+      if (!username || !password) return alert("Lütfen tüm alanları doldurun.");
 
-    try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyxP93Jet9z1ah4da7cjXB6Vag7-sPGNKMe29eDmEZRn_RVAFqhSI58smm7l3B-BQKk/exec", {
+      fetch(scriptURL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        alert("Giriş başarılı! Yönlendiriliyorsunuz...");
-        window.location.href = "admin-panel.html";
-      } else {
-        errorMsg.textContent = result.message;
-      }
-    } catch (error) {
-      errorMsg.textContent = "Sunucu hatası: " + error.message;
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ username, password, type: "login" }),
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("Giriş başarılı!");
+          // Burada başka bir sayfaya yönlendirebilirsin.
+        } else {
+          alert("Hatalı kullanıcı adı veya şifre.");
+        }
+      })
+      .catch(() => alert("Bir hata oluştu."));
     }
-  });
-</script>
 
+    function uyeOl() {
+      const username = document.getElementById("signup-username").value.trim();
+      const password = document.getElementById("signup-password").value.trim();
+
+      if (!username || !password) return alert("Lütfen tüm alanları doldurun.");
+
+      fetch(scriptURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ username, password, type: "signup" }),
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("Kayıt başarılı!");
+        } else {
+          alert("Kayıt yapılamadı: " + data.message);
+        }
+      })
+      .catch(() => alert("Bir hata oluştu."));
+    }
+  </script>
 </body>
 </html>
