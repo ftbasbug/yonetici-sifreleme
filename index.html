@@ -9,6 +9,7 @@
       background-color: #f4f4f4;
       padding: 20px;
     }
+
     .login-container {
       background: white;
       padding: 30px;
@@ -17,6 +18,7 @@
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
     input[type="text"], input[type="password"] {
       width: 100%;
       padding: 10px;
@@ -24,6 +26,7 @@
       border: 1px solid #ccc;
       border-radius: 4px;
     }
+
     button {
       padding: 10px;
       width: 100%;
@@ -34,21 +37,33 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
     .error {
       color: red;
       margin-top: 10px;
+      font-size: 0.9em;
     }
+
     .register-box {
-      margin-top: 20px;
-      padding: 15px;
-      border: 1px dashed #ccc;
+      margin-top: 15px;
       text-align: center;
-      border-radius: 6px;
-      background-color: #fafafa;
+      font-size: 0.85em;
+      color: #666;
     }
+
     .register-box button {
-      background-color: #2196F3;
-      margin-top: 10px;
+      background-color: transparent;
+      color: #2196F3;
+      border: none;
+      padding: 0;
+      font-size: 0.85em;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-top: 5px;
+    }
+
+    .register-box button:hover {
+      color: #0b7dda;
     }
   </style>
 </head>
@@ -63,9 +78,9 @@
     <p class="error" id="errorMsg"></p>
   </form>
 
-  <!-- Üye Ol Kutusu -->
+  <!-- Minimal Üye Ol Kutusu -->
   <div class="register-box">
-    <p>İlk kez mi giriş yapıyorsunuz?</p>
+    <span>Hesabınız yok mu?</span><br>
     <button onclick="window.location.href='yonetici-uye-ol.html'">Üye Ol</button>
   </div>
 </div>
