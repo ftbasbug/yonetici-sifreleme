@@ -62,7 +62,10 @@
       const username = document.getElementById("login-username").value.trim();
       const password = document.getElementById("login-password").value.trim();
 
-      if (!username || !password) return alert("Lütfen tüm alanları doldurun.");
+      if (!username || !password) {
+        alert("Lütfen tüm alanları doldurun.");
+        return;
+      }
 
       fetch(scriptURL, {
         method: "POST",
@@ -72,8 +75,8 @@
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          alert("Giriş başarılı!");
-          // Yönlendirme ekleyebilirsin
+          // Giriş başarılıysa admin paneline yönlendir
+          window.location.href = "admin-panel.html";
         } else {
           alert("Hatalı kullanıcı adı veya şifre.");
         }
@@ -85,7 +88,10 @@
       const username = document.getElementById("login-username").value.trim();
       const password = document.getElementById("login-password").value.trim();
 
-      if (!username || !password) return alert("Lütfen önce kullanıcı adı ve şifre girin.");
+      if (!username || !password) {
+        alert("Lütfen önce kullanıcı adı ve şifre girin.");
+        return;
+      }
 
       fetch(scriptURL, {
         method: "POST",
