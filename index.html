@@ -44,12 +44,6 @@
     button:hover {
       background-color: #0056b3;
     }
-    .small {
-      font-size: 12px;
-      text-align: center;
-      margin-top: 10px;
-      color: #666;
-    }
     .divider {
       margin: 20px 0;
       text-align: center;
@@ -70,8 +64,6 @@
     <input type="text" id="signup-username" placeholder="Yeni Kullanıcı Adı" />
     <input type="password" id="signup-password" placeholder="Yeni Şifre" />
     <button onclick="uyeOl()">Üye Ol</button>
-
-    <div class="small">Zaten hesabınız yok mu? Yukarıdan oluşturabilirsiniz.</div>
   </div>
 
   <script>
@@ -92,7 +84,7 @@
       .then(data => {
         if (data.success) {
           alert("Giriş başarılı!");
-          // Burada başka bir sayfaya yönlendirebilirsin.
+          // Burada yönlendirme yapabilirsin
         } else {
           alert("Hatalı kullanıcı adı veya şifre.");
         }
