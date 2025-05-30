@@ -1,4 +1,4 @@
-<!-- pages/foundation.html -->
+<!-- foundation.html -->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -8,16 +8,15 @@
 </head>
 <body>
   <script>
-    // Giriş kontrolü
     const accessKey = localStorage.getItem("adminAccessKey");
 
     if (accessKey === "true") {
-      // Erişim varsa yönlendir
-      window.location.href = "../admin-panel.html";
+      // Giriş başarılıysa admin paneline yönlendir
+      window.location.href = "admin-panel.html";
     } else {
-      // Erişim yoksa giriş sayfasına yönlendir
+      // Erişim yoksa giriş ekranına yönlendir
       alert("Yetkisiz giriş! Lütfen tekrar giriş yapın.");
-      window.location.href = "../index.html";
+      window.location.href = "index.html";
     }
   </script>
 </body>
