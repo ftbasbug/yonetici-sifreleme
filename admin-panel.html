@@ -3,22 +3,29 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yönetici Paneli</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Paneli</title>
   <link rel="stylesheet" href="css/admin-panel.css" />
 </head>
 <body>
-  <div class="admin-container">
-    <!-- Sağ Panel (Menü) -->
-    <aside class="admin-sidebar">
-      <div class="admin-profile">
+  <div class="admin-panel">
+    <!-- Sol Üst: Tarih ve başlık -->
+    <div class="admin-left">
+      <div class="admin-date" id="bugun-tarih"></div>
+      <h2>Bugünün Rezervasyonları</h2>
+      <div id="bugunun-rezervasyonlari">
+        <!-- Rezervasyonlar buraya JS ile yüklenecek -->
+      </div>
+    </div>
+
+    <!-- Sağ Menü -->
+    <div class="admin-right">
+      <div class="admin-user-info">
         <img src="img/admin-icon.png" alt="Admin Icon" class="admin-avatar" />
         <div class="admin-name">Talha Yılmaz</div>
-      </div>
-      <hr />
-      <div class="admin-menu">
+        <hr />
         <h3>Menü</h3>
-        <ul>
+        <ul class="admin-menu">
           <li><a href="pages/rezervasyonlar.html">Bütün Rezervasyonlar</a></li>
           <li><a href="pages/araclar.html">Arabalar</a></li>
           <li><a href="pages/kazanc.html">Aylık Kazanç</a></li>
@@ -27,25 +34,18 @@
       <div class="admin-logout">
         <button onclick="cikisYap()">Çıkış Yap</button>
       </div>
-    </aside>
-
-    <!-- Sol Panel (İçerik) -->
-    <main class="admin-main">
-      <div class="admin-date-box">
-        <div id="bugun-tarih"></div>
-      </div>
-      <h2>Bugünün Rezervasyonları</h2>
-      <div id="bugunun-rezervasyonlari">
-        <!-- JS ile doldurulacak -->
-      </div>
-    </main>
+    </div>
   </div>
 
   <script>
-    // Tarihi yazdır
-    document.getElementById("bugun-tarih").textContent = new Date().toLocaleDateString("tr-TR", {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    // Tarihi göster
+    const bugun = new Date().toLocaleDateString("tr-TR", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric"
     });
+    document.getElementById("bugun-tarih").textContent = bugun;
 
     // Çıkış fonksiyonu
     function cikisYap() {
