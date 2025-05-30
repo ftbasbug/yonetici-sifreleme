@@ -3,53 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Yönetici Paneli</title>
+  <title>Admin Paneli</title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
+      display: flex;
+      min-height: 100vh;
       font-family: Arial, sans-serif;
-      background: #eef2f7;
+      background-color: #f0f2f5;
+    }
+    .left-panel {
+      flex: 1;
+      padding: 30px;
+    }
+    .right-panel {
+      width: 300px;
+      background-color: #fff;
+      border-left: 1px solid #ccc;
+      padding: 30px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
     }
-    .panel {
-      background: white;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    .admin-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-image: url('https://via.placeholder.com/100');
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 10px;
+    }
+    .admin-name {
+      font-weight: bold;
+      margin-bottom: 10px;
       text-align: center;
     }
-    h1 {
-      color: #333;
+    .divider {
+      width: 100%;
+      height: 2px;
+      background-color: #ccc;
+      margin: 15px 0;
     }
-    button {
-      margin-top: 20px;
-      padding: 12px 24px;
-      background-color: #dc3545;
+    .menu-title {
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 16px;
+      text-align: center;
+    }
+    .menu-button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      background-color: #007bff;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 14px;
     }
-    button:hover {
-      background-color: #b52a36;
+    .menu-button:hover {
+      background-color: #0056b3;
+    }
+    .logout-button {
+      margin-top: auto;
+      background-color: #dc3545;
+    }
+    .logout-button:hover {
+      background-color: #b02a37;
+    }
+    .date-box {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: inline-block;
+      font-weight: bold;
+    }
+    .reservations-box {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .reservations-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .reservation-item {
+      padding: 8px;
+      background-color: #e9ecef;
+      margin-bottom: 5px;
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
-  <div class="panel">
-    <h1>Hoş geldiniz, Yönetici!</h1>
-    <p>Buradan sistemi yönetebilirsiniz.</p>
-    <button onclick="cikisYap()">Çıkış Yap</button>
+
+  <div class="left-panel">
+    <div class="date-box" id="today-date"></div>
+    <div class="reservations-box">
+      <div class="reservations-title">Bugünün Rezervasyonları</div>
+      <div id="today-reservations">
+        <div class="reservation-item">10:00 - Ahmet Yılmaz</div>
+        <div class="reservation-item">12:30 - Zeynep Demir</div>
+        <!-- Dinamik olarak burası güncellenecek -->
+      </div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="admin-photo"></div>
+    <div class="admin-name" id="admin-name">Talha Yılmaz</div>
+    <div class="divider"></div>
+    <div class="menu-title">Menü</div>
+    <button class="menu-button" onclick="window.location.href='pages/all-reservations.html'">Bütün Rezervasyonlar</button>
+    <button class="menu-button" onclick="window.location.href='pages/cars.html'">Arabalar</button>
+    <button class="menu-button" onclick="window.location.href='pages/monthly-income.html'">Aylık Kazanç</button>
+    <button class="menu-button logout-button" onclick="cikisYap()">Çıkış Yap</button>
   </div>
 
   <script>
+    // Güvenlik kontrolü
+    if (localStorage.getItem("adminAuth") !== "true") {
+      window.location.href = "index.html";
+    }
+
+    // Tarihi yaz
+    const today = new Date();
+    const dateBox = document.getElementById("today-date");
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    dateBox.textContent = today.toLocaleDateString('tr-TR', options);
+
+    // Çıkış işlemi
     function cikisYap() {
-      window.location.href = "yonetici-sifreleme.html";
+      localStorage.removeItem("adminAuth");
+      window.location.href = "index.html";
     }
   </script>
 </body>
 </html>
-
