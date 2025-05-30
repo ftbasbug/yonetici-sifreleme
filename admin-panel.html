@@ -2,138 +2,143 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       display: flex;
       height: 100vh;
-      background-color: #f4f4f4;
     }
 
-    .left-content {
-      flex: 1;
+    /* Sağ panel */
+    .sidebar {
+      width: 260px;
+      background-color: #f8f9fa;
       padding: 20px;
-    }
-
-    .right-sidebar {
-      width: 300px;
-      background-color: #fff;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
       align-items: center;
-      border-left: 1px solid #ccc;
-      padding: 20px 10px;
-      position: relative;
     }
 
-    .profile-pic {
+    .sidebar img {
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      background-color: #ccc;
+      object-fit: cover;
       margin-bottom: 10px;
     }
 
-    .admin-name {
+    .sidebar .name {
       font-weight: bold;
       margin-bottom: 10px;
     }
 
-    .divider {
+    .sidebar hr {
       width: 100%;
-      height: 3px;
-      background-color: #007bff;
-      margin: 10px 0;
+      border: 1px solid #ccc;
+      margin: 15px 0;
     }
 
-    .menu-title {
+    .sidebar .menu-title {
       font-weight: bold;
       margin-bottom: 10px;
     }
 
-    .menu-button {
+    .sidebar button {
       width: 100%;
       padding: 10px;
       margin: 5px 0;
+      border: none;
+      border-radius: 6px;
       background-color: #007bff;
       color: white;
-      border: none;
-      border-radius: 5px;
       cursor: pointer;
     }
 
-    .logout-button {
-      position: absolute;
-      bottom: 20px;
-      width: 90%;
-      padding: 10px;
-      background-color: #dc3545;
+    .sidebar button:hover {
+      background-color: #0056b3;
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .date-box {
+      background-color: #007bff;
       color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .today-box {
-      background-color: #fff;
       padding: 15px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       margin-bottom: 20px;
+      max-width: 300px;
     }
 
-    .today-title {
-      font-weight: bold;
-      margin-top: 10px;
-      margin-bottom: 10px;
+    .date-box h3 {
+      margin-top: 0;
+    }
+
+    .reservations {
+      background-color: #f1f1f1;
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 600px;
     }
   </style>
 </head>
 <body>
-  <div class="left-content">
-    <div class="today-box">
-      <div id="today-date"></div>
-      <div class="today-title">Bugünün Rezervasyonları</div>
-      <div id="today-reservations">- Henüz veri yok -</div>
+  <!-- İçerik -->
+  <div class="content">
+    <div class="date-box">
+      <h3 id="today-date"></h3>
+    </div>
+    <div class="reservations">
+      <h4>Bugünün Rezervasyonları</h4>
+      <p>Henüz gösterilecek veri yok.</p>
     </div>
   </div>
 
-  <div class="right-sidebar">
-    <div class="profile-pic"></div>
-    <div class="admin-name">Talha Yönetici</div>
-    <div class="divider"></div>
+  <!-- Sağ panel -->
+  <div class="sidebar">
+    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Yönetici">
+    <div class="name">Talha Yılmaz</div>
+    <hr>
     <div class="menu-title">Menü</div>
-    <button class="menu-button" onclick="location.href='pages/butun-rezervasyonlar.html'">Bütün Rezervasyonlar</button>
-    <button class="menu-button" onclick="location.href='pages/arabalar.html'">Arabalar</button>
-    <button class="menu-button" onclick="location.href='pages/aylik-kazanc.html'">Aylık Kazanç</button>
-    <button class="logout-button" onclick="cikisYap()">Çıkış Yap</button>
+    <button onclick="goToPage('reservations.html')">Bütün Rezervasyonlar</button>
+    <button onclick="goToPage('cars.html')">Arabalar</button>
+    <button onclick="goToPage('income.html')">Aylık Kazanç</button>
+    <div style="margin-top: auto; width: 100%;">
+      <button style="background-color: #dc3545;" onclick="cikisYap()">Çıkış Yap</button>
+    </div>
   </div>
 
   <script>
-    // Erişim kontrolü
-    document.addEventListener("DOMContentLoaded", function() {
-      const isAdmin = localStorage.getItem("adminLogin");
+    // Sayfa yüklenince localStorage kontrolü
+    document.addEventListener("DOMContentLoaded", () => {
+      const isAdmin = localStorage.getItem("adminLoggedIn");
       if (!isAdmin || isAdmin !== "true") {
-        alert("Yetkisiz erişim! Lütfen tekrar giriş yapın.");
+        alert("Erişim engeli: Yetkisiz giriş.");
         window.location.href = "index.html";
       }
 
-      // Tarihi yaz
-      const today = new Date();
-      const formattedDate = today.toLocaleDateString("tr-TR", {
+      // Tarihi göster
+      const today = new Date().toLocaleDateString("tr-TR", {
+        weekday: 'long',
         year: 'numeric',
         month: 'long',
-        day: 'numeric',
-        weekday: 'long'
+        day: 'numeric'
       });
-      document.getElementById("today-date").textContent = formattedDate;
+      document.getElementById("today-date").textContent = today;
     });
 
+    function goToPage(page) {
+      window.location.href = page;
+    }
+
     function cikisYap() {
-      localStorage.removeItem("adminLogin");
+      localStorage.removeItem("adminLoggedIn");
       window.location.href = "index.html";
     }
   </script>
