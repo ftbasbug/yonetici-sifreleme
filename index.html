@@ -48,7 +48,7 @@
     <h2>Yönetici Giriş</h2>
     <input type="text" id="login-username" placeholder="Kullanıcı Adı" />
     <input type="password" id="login-password" placeholder="Şifre" />
-    <button onclick="girisYap()">Giriş Yap</button>
+    <button id="login-button" onclick="girisYap()">Giriş Yap</button>
   </div>
 
   <script>
@@ -83,6 +83,13 @@
       })
       .catch(() => alert("Bir hata oluştu."));
     }
+
+    // Enter tuşuna basıldığında giriş fonksiyonunu çalıştır
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        girisYap();
+      }
+    });
   </script>
 </body>
 </html>
