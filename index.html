@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f2f2f2;
+      background: #f0f0f0;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -24,22 +24,19 @@
       text-align: center;
       margin-bottom: 20px;
     }
-    input {
+    input, button {
       width: 100%;
       padding: 10px;
       margin: 6px 0;
-      border: 1px solid #ccc;
       border-radius: 6px;
     }
+    input {
+      border: 1px solid #ccc;
+    }
     button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 6px;
       background-color: #007bff;
       color: white;
-      cursor: pointer;
+      border: none;
     }
     button:hover {
       background-color: #0056b3;
@@ -57,10 +54,6 @@
   <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxQcPEYh6_3aRp1xjN5vCtQjiAQbHDwqfUkl_03d46_VkuH-JQOHWYFQEjslqf3rBd3rw/exec';
 
-    function tamamenRakamMi(str) {
-      return /^\d+$/.test(str);
-    }
-
     function girisYap() {
       const username = document.getElementById("login-username").value.trim();
       const password = document.getElementById("login-password").value.trim();
@@ -70,35 +63,26 @@
         return;
       }
 
-      if (tamamenRakamMi(username) || tamamenRakamMi(password)) {
-        alert("Kullanıcı adı veya şifre tamamen rakamdan oluşamaz!");
-        return;
-      }
-
       fetch(scriptURL, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ username, password, type: "login" }),
+        body: new URLSearchParams({
+          username,
+          password,
+          type: "login"
+        })
       })
       .then(res => res.json())
       .then(data => {
         if (data.success) {
           localStorage.setItem("adminLoggedIn", "true");
-          setTimeout(() => {
-            window.location.href = "admin-panel.html";
-          }, 500);
+          window.location.href = "admin-panel.html";
         } else {
           alert("Hatalı kullanıcı adı veya şifre.");
         }
       })
       .catch(() => alert("Bir hata oluştu."));
     }
-
-    document.addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        girisYap();
-      }
-    });
   </script>
 </body>
 </html>
