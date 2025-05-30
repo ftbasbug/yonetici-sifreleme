@@ -84,9 +84,10 @@
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          // ✅ localStorage'a anahtar yaz
           localStorage.setItem("adminAuth", "true");
-          window.location.href = "admin-panel.html";
+          setTimeout(() => {
+            window.location.href = "admin-panel.html";
+          }, 500); // 0.5 saniyelik geçiş
         } else {
           alert("Hatalı kullanıcı adı veya şifre.");
         }
