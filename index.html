@@ -52,7 +52,6 @@
     <input type="text" id="login-username" placeholder="Kullanıcı Adı" />
     <input type="password" id="login-password" placeholder="Şifre" />
     <button onclick="girisYap()">Giriş Yap</button>
-    <button onclick="uyeOl()">Üye Ol</button>
   </div>
 
   <script>
@@ -84,42 +83,12 @@
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          localStorage.setItem("adminAuth", "true");
+          localStorage.setItem("adminLoggedIn", "true");
           setTimeout(() => {
             window.location.href = "admin-panel.html";
-          }, 500); // 0.5 saniyelik geçiş
+          }, 500);
         } else {
           alert("Hatalı kullanıcı adı veya şifre.");
-        }
-      })
-      .catch(() => alert("Bir hata oluştu."));
-    }
-
-    function uyeOl() {
-      const username = document.getElementById("login-username").value.trim();
-      const password = document.getElementById("login-password").value.trim();
-
-      if (!username || !password) {
-        alert("Lütfen önce kullanıcı adı ve şifre girin.");
-        return;
-      }
-
-      if (tamamenRakamMi(username) || tamamenRakamMi(password)) {
-        alert("Kullanıcı adı veya şifre tamamen rakamdan oluşamaz!");
-        return;
-      }
-
-      fetch(scriptURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ username, password, type: "signup" }),
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert("Kayıt başarılı!");
-        } else {
-          alert("Kayıt yapılamadı: " + data.message);
         }
       })
       .catch(() => alert("Bir hata oluştu."));
