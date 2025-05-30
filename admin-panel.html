@@ -115,15 +115,15 @@
   </div>
 
   <script>
-    // Sayfa yüklenince localStorage kontrolü
     document.addEventListener("DOMContentLoaded", () => {
       const isAdmin = localStorage.getItem("adminLoggedIn");
-      if (!isAdmin || isAdmin !== "true") {
+
+      if (isAdmin !== "true") {
         alert("Erişim engeli: Yetkisiz giriş.");
         window.location.href = "index.html";
+        return;
       }
 
-      // Tarihi göster
       const today = new Date().toLocaleDateString("tr-TR", {
         weekday: 'long',
         year: 'numeric',
