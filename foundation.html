@@ -1,23 +1,37 @@
-<!-- foundation.html -->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Yönetici Paneli Yükleniyor...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <script>
-    const accessKey = localStorage.getItem("adminAccessKey");
+  <div id="app"></div>
 
-    if (accessKey === "true") {
-      // Giriş başarılıysa admin paneline yönlendir
-      window.location.href = "admin-panel.html";
-    } else {
-      // Erişim yoksa giriş ekranına yönlendir
-      alert("Yetkisiz giriş! Lütfen tekrar giriş yapın.");
-      window.location.href = "index.html";
+  <script>
+    // Güvenlik kontrolü
+    const isLoggedIn = localStorage.getItem('admin_token') === 'gizli_anahtar';
+
+    if (!isLoggedIn) {
+      window.location.href = "admin-login.html"; // yetkisizse giriş ekranına yönlendir
     }
+
+    // SPA sayfa yükleme
+    const loadPage = (path) => {
+      fetch(path)
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("app").innerHTML = html;
+        })
+        .catch(() => {
+          document.getElementById("app").innerHTML = "<p>Sayfa yüklenemedi.</p>";
+        });
+    };
+
+    // URL'den hedef sayfa belirle
+    const currentPage = new URLSearchParams(window.location.search).get('page') || 'admin-panel.html';
+    loadPage(`pages/${currentPage}`);
   </script>
 </body>
 </html>
