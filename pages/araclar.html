@@ -1,189 +1,50 @@
-<!-- pages/araclar.html -->
-
-<div class="admin-content">
-  <div class="content-header">
-    <h2>Araç Listesi</h2>
-    <button id="btnAddCar">+ Yeni Araç Ekle</button>
-  </div>
-
-  <div class="car-table-wrapper">
-    <table class="car-table">
-      <thead>
+<section class="p-6">
+  <h2 class="text-2xl font-bold mb-4">Araç Listesi</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full border border-gray-300">
+      <thead class="bg-gray-100">
         <tr>
-          <th>Marka</th>
-          <th>Model</th>
-          <th>Yıl</th>
-          <th>Plaka</th>
-          <th>Durum</th>
-          <th>İşlemler</th>
+          <th class="border px-4 py-2">Şasi No</th>
+          <th class="border px-4 py-2">Marka</th>
+          <th class="border px-4 py-2">Model</th>
+          <th class="border px-4 py-2">Yıl</th>
+          <th class="border px-4 py-2">Plaka</th>
+          <th class="border px-4 py-2">Vites</th>
+          <th class="border px-4 py-2">Yakıt</th>
+          <th class="border px-4 py-2">Muayene</th>
+          <th class="border px-4 py-2">Sigorta</th>
+          <th class="border px-4 py-2">Poliçe</th>
+          <th class="border px-4 py-2">Kaza</th>
+          <th class="border px-4 py-2">HGS</th>
+          <th class="border px-4 py-2">Emniyet</th>
+          <th class="border px-4 py-2">Servis</th>
         </tr>
       </thead>
-      <tbody id="carTableBody">
-        <!-- JavaScript ile dinamik olarak araçlar buraya eklenecek -->
+      <tbody>
+        <!-- Örnek veri -->
+        <tr>
+          <td class="border px-4 py-2">123456789</td>
+          <td class="border px-4 py-2">Toyota</td>
+          <td class="border px-4 py-2">Corolla</td>
+          <td class="border px-4 py-2">2022</td>
+          <td class="border px-4 py-2">34ABC123</td>
+          <td class="border px-4 py-2">Otomatik</td>
+          <td class="border px-4 py-2">Benzin</td>
+          <td class="border px-4 py-2">2025-01-10</td>
+          <td class="border px-4 py-2">2025-05-20</td>
+          <td class="border px-4 py-2">Axa Sigorta</td>
+          <td class="border px-4 py-2">Yok</td>
+          <td class="border px-4 py-2">Aktif</td>
+          <td class="border px-4 py-2">Tamam</td>
+          <td class="border px-4 py-2">Yapıldı</td>
+        </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Modal -->
-  <div id="carModal" class="modal hidden">
-    <div class="modal-content">
-      <h3>Yeni Araç Ekle</h3>
-      <input type="text" id="brandInput" placeholder="Marka" />
-      <input type="text" id="modelInput" placeholder="Model" />
-      <input type="number" id="yearInput" placeholder="Yıl" />
-      <input type="text" id="plateInput" placeholder="Plaka" />
-      <select id="statusInput">
-        <option value="Müsait">Müsait</option>
-        <option value="Kirada">Kirada</option>
-      </select>
-      <div class="modal-actions">
-        <button id="saveCarBtn">Kaydet</button>
-        <button id="closeModalBtn">İptal</button>
-      </div>
-    </div>
+  <div class="mt-6 text-right">
+    <button onclick="window.location.href='foundation.html?page=admin-panel.html'" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Geri Dön
+    </button>
   </div>
-</div>
-
-<style>
-  .admin-content {
-    padding: 20px;
-  }
-
-  .content-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .content-header h2 {
-    margin: 0;
-  }
-
-  #btnAddCar {
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-
-  #btnAddCar:hover {
-    background-color: #0056b3;
-  }
-
-  .car-table-wrapper {
-    overflow-x: auto;
-  }
-
-  .car-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .car-table th,
-  .car-table td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-
-  .car-table th {
-    background-color: #f4f4f4;
-  }
-
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .modal.hidden {
-    display: none;
-  }
-
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-  }
-
-  .modal-content input,
-  .modal-content select {
-    width: 100%;
-    margin: 10px 0;
-    padding: 8px;
-  }
-
-  .modal-actions {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .modal-actions button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  #saveCarBtn {
-    background-color: #28a745;
-    color: white;
-  }
-
-  #closeModalBtn {
-    background-color: #dc3545;
-    color: white;
-  }
-</style>
-
-<script>
-  const modal = document.getElementById("carModal");
-  const openBtn = document.getElementById("btnAddCar");
-  const closeBtn = document.getElementById("closeModalBtn");
-  const saveBtn = document.getElementById("saveCarBtn");
-  const tableBody = document.getElementById("carTableBody");
-
-  openBtn.addEventListener("click", () => modal.classList.remove("hidden"));
-  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
-
-  saveBtn.addEventListener("click", () => {
-    const brand = document.getElementById("brandInput").value.trim();
-    const model = document.getElementById("modelInput").value.trim();
-    const year = document.getElementById("yearInput").value.trim();
-    const plate = document.getElementById("plateInput").value.trim();
-    const status = document.getElementById("statusInput").value;
-
-    if (!brand || !model || !year || !plate) {
-      alert("Tüm alanları doldurun.");
-      return;
-    }
-
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${brand}</td>
-      <td>${model}</td>
-      <td>${year}</td>
-      <td>${plate}</td>
-      <td>${status}</td>
-      <td><button onclick="this.closest('tr').remove()">Sil</button></td>
-    `;
-    tableBody.appendChild(row);
-
-    modal.classList.add("hidden");
-    document.getElementById("brandInput").value = "";
-    document.getElementById("modelInput").value = "";
-    document.getElementById("yearInput").value = "";
-    document.getElementById("plateInput").value = "";
-    document.getElementById("statusInput").value = "Müsait";
-  });
-</script>
+</section>
