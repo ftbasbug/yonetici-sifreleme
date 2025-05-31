@@ -1,37 +1,37 @@
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const isAdmin = localStorage.getItem("adminLoggedIn");
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app"></div>
 
-    if (!isAdmin || isAdmin !== "true") {
-      window.location.href = "/admin-login.html";
+  <script>
+    // Güvenlik kontrolü
+    const isLoggedIn = localStorage.getItem('admin_token') === 'gizli_anahtar';
+
+    if (!isLoggedIn) {
+      window.location.href = "admin-login.html"; // yetkisizse giriş ekranına yönlendir
     }
 
-    // Örnek: İlk açılışta admin panelini getir
-    fetch("admin-panel.html")
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("main-content").innerHTML = html;
-        history.pushState({}, "", "/admin-panel");
-      });
-  });
+    // SPA sayfa yükleme
+    const loadPage = (path) => {
+      fetch(path)
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("app").innerHTML = html;
+        })
+        .catch(() => {
+          document.getElementById("app").innerHTML = "<p>Sayfa yüklenemedi.</p>";
+        });
+    };
 
-  // SPA Navigasyon (menü butonları çağırdığında sayfayı yükle)
-  function navigateTo(pagePath, pageTitle) {
-    fetch(pagePath)
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("main-content").innerHTML = html;
-        history.pushState({}, "", pageTitle);
-      });
-  }
-
-  // Geri tuşları için SPA desteği
-  window.onpopstate = () => {
-    const currentPath = location.pathname.replace("/", "") || "admin-panel.html";
-    fetch(currentPath)
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("main-content").innerHTML = html;
-      });
-  };
-</script>
+    // URL'den hedef sayfa belirle
+    const currentPage = new URLSearchParams(window.location.search).get('page') || 'admin-panel.html';
+    loadPage(`pages/${currentPage}`);
+  </script>
+</body>
+</html>
