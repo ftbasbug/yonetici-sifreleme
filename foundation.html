@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Yönetici Paneli</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="css/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="bg-gray-100 min-h-screen">
-  <div id="app" class="max-w-screen-xl mx-auto p-4"></div>
+<body>
+  <div id="app">
+    <!-- Sayfa içeriği buraya yüklenecek -->
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const adminAccessKey = localStorage.getItem('admin_access_key');
       const page = new URLSearchParams(window.location.search).get('page');
-      const isLoggedIn = localStorage.getItem('admin_logged_in') === 'true';
 
-      if (!isLoggedIn) {
+      // ✅ Güvenlik kontrolü: Giriş yapılmamışsa index.html'e yönlendir
+      if (adminAccessKey !== 'secure_admin_login') {
         window.location.href = 'index.html';
-      } else if (page) {
-        fetch(`pages/${page}`)
-          .then(res => res.text())
-          .then(html => {
-            document.getElementById('app').innerHTML = html;
-          })
-          .catch(() => {
-            document.getElementById('app').innerHTML = '<p class="text-red-500">Sayfa yüklenemedi.</p>';
-          });
-      } else {
-        document.getElementById('app').innerHTML = '<p class="text-gray-600">Sayfa bulunamadı.</p>';
+        return;
       }
+
+      // ✅ SPA sayfa yükleyici: page parametresine göre içerik yükle
+      if (!page) {
+        document.getElementById('app').innerHTML = '<h1>Sayfa bulunamadı</h1>';
+        return;
+      }
+
+      fetch(`pages/${page}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Sayfa yüklenemedi');
+          }
+          return response.text();
+        })
+        .then(html => {
+          document.getElementById('app').innerHTML = html;
+        })
+        .catch(error => {
+          console.error(error);
+          document.getElementById('app').innerHTML = '<h1>Sayfa bulunamadı (404)</h1>';
+        });
     });
   </script>
 </body>
