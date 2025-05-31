@@ -1,59 +1,50 @@
 <section class="p-6">
-  <h2 class="text-2xl font-semibold mb-4">Araç Listesi</h2>
-
-  <div class="overflow-x-auto shadow-lg rounded-lg border">
-    <table class="min-w-full text-sm text-left text-gray-700">
-      <thead class="bg-gray-100 text-xs uppercase">
+  <h2 class="text-2xl font-bold mb-4">Araç Listesi</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full border border-gray-300">
+      <thead class="bg-gray-100">
         <tr>
-          <th class="px-4 py-3">Şasi No</th>
-          <th class="px-4 py-3">Marka</th>
-          <th class="px-4 py-3">Model</th>
-          <th class="px-4 py-3">Yıl</th>
-          <th class="px-4 py-3">Plaka</th>
-          <th class="px-4 py-3">Vites</th>
-          <th class="px-4 py-3">Yakıt</th>
-          <th class="px-4 py-3">Muayene</th>
-          <th class="px-4 py-3">Sigorta</th>
-          <th class="px-4 py-3">Poliçe</th>
-          <th class="px-4 py-3">Kaza</th>
-          <th class="px-4 py-3">HGS</th>
-          <th class="px-4 py-3">Emniyet</th>
-          <th class="px-4 py-3">Servis</th>
+          <th class="border px-4 py-2">Şasi No</th>
+          <th class="border px-4 py-2">Marka</th>
+          <th class="border px-4 py-2">Model</th>
+          <th class="border px-4 py-2">Yıl</th>
+          <th class="border px-4 py-2">Plaka</th>
+          <th class="border px-4 py-2">Vites</th>
+          <th class="border px-4 py-2">Yakıt</th>
+          <th class="border px-4 py-2">Muayene</th>
+          <th class="border px-4 py-2">Sigorta</th>
+          <th class="border px-4 py-2">Poliçe</th>
+          <th class="border px-4 py-2">Kaza</th>
+          <th class="border px-4 py-2">HGS</th>
+          <th class="border px-4 py-2">Emniyet</th>
+          <th class="border px-4 py-2">Servis</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Örnek satır -->
-        <tr class="border-b hover:bg-gray-50">
-          <td class="px-4 py-2">1234567890</td>
-          <td class="px-4 py-2">Renault</td>
-          <td class="px-4 py-2">Clio</td>
-          <td class="px-4 py-2">2020</td>
-          <td class="px-4 py-2">34ABC123</td>
-          <td class="px-4 py-2">Manuel</td>
-          <td class="px-4 py-2">Benzin</td>
-          <td class="px-4 py-2">01.01.2025</td>
-          <td class="px-4 py-2">15.06.2025</td>
-          <td class="px-4 py-2">Poliçe123</td>
-          <td class="px-4 py-2">Yok</td>
-          <td class="px-4 py-2">Var</td>
-          <td class="px-4 py-2">Uygun</td>
-          <td class="px-4 py-2">Yeni Bakım</td>
+        <!-- Örnek veri -->
+        <tr>
+          <td class="border px-4 py-2">123456789</td>
+          <td class="border px-4 py-2">Toyota</td>
+          <td class="border px-4 py-2">Corolla</td>
+          <td class="border px-4 py-2">2022</td>
+          <td class="border px-4 py-2">34ABC123</td>
+          <td class="border px-4 py-2">Otomatik</td>
+          <td class="border px-4 py-2">Benzin</td>
+          <td class="border px-4 py-2">2025-01-10</td>
+          <td class="border px-4 py-2">2025-05-20</td>
+          <td class="border px-4 py-2">Axa Sigorta</td>
+          <td class="border px-4 py-2">Yok</td>
+          <td class="border px-4 py-2">Aktif</td>
+          <td class="border px-4 py-2">Tamam</td>
+          <td class="border px-4 py-2">Yapıldı</td>
         </tr>
-        <!-- Diğer araçlar buraya eklenebilir -->
       </tbody>
     </table>
   </div>
 
-  <div class="mt-6 flex justify-end">
-    <button onclick="goBack()" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md shadow-md">
+  <div class="mt-6 text-right">
+    <button onclick="window.location.href='foundation.html?page=admin-panel.html'" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
       Geri Dön
     </button>
   </div>
 </section>
-
-<script>
-  function goBack() {
-    window.history.pushState({}, '', 'foundation.html?page=admin-panel.html');
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  }
-</script>
