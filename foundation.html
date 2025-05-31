@@ -1,54 +1,37 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Panel - Foundation</title>
-  <style>
-    /* Basit temel stiller */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9fafb;
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const isAdmin = localStorage.getItem("adminLoggedIn");
+
+    if (!isAdmin || isAdmin !== "true") {
+      window.location.href = "/admin-login.html";
     }
-    #content {
-      padding: 20px;
-    }
-  </style>
-</head>
-<body>
 
-  <div id="content">Sayfa yükleniyor...</div>
+    // Örnek: İlk açılışta admin panelini getir
+    fetch("admin-panel.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("main-content").innerHTML = html;
+        history.pushState({}, "", "/admin-panel");
+      });
+  });
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Yetki kontrolü
-      const accessKey = localStorage.getItem('admin_access_key');
-      if (accessKey !== 'secure_admin_login') {
-        alert('Yetkisiz erişim! Giriş sayfasına yönlendiriliyorsunuz.');
-        window.location.href = 'index.html';
-        return;
-      }
+  // SPA Navigasyon (menü butonları çağırdığında sayfayı yükle)
+  function navigateTo(pagePath, pageTitle) {
+    fetch(pagePath)
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("main-content").innerHTML = html;
+        history.pushState({}, "", pageTitle);
+      });
+  }
 
-      // URL'den page parametresini al, yoksa default admin-panel.html
-      const urlParams = new URLSearchParams(window.location.search);
-      const page = urlParams.get('page') || 'admin-panel.html';
-
-      fetch(`pages/${page}`)
-        .then(response => {
-          if (!response.ok) throw new Error('Sayfa yüklenemedi');
-          return response.text();
-        })
-        .then(html => {
-          document.getElementById('content').innerHTML = html;
-        })
-        .catch(err => {
-          document.getElementById('content').innerHTML = '<p>Sayfa bulunamadı.</p>';
-          console.error(err);
-        });
-    });
-  </script>
-
-</body>
-</html>
+  // Geri tuşları için SPA desteği
+  window.onpopstate = () => {
+    const currentPath = location.pathname.replace("/", "") || "admin-panel.html";
+    fetch(currentPath)
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("main-content").innerHTML = html;
+      });
+  };
+</script>
