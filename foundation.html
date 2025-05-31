@@ -31,7 +31,7 @@
 
     // URL'den hedef sayfa belirle
     const currentPage = new URLSearchParams(window.location.search).get('page') || 'admin-panel.html';
-    loadPage(`pages/${currentPage}`);
+    loadPage(`${currentPage}`);
   </script>
 </body>
 </html>
