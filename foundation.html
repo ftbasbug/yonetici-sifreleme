@@ -2,48 +2,33 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Yönetici Sayfası</title>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-    }
-    #app {
-      padding: 20px;
-    }
-  </style>
+  <title>Yönetici Paneli</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-  <div id="app">
-    <!-- SPA içeriği buraya yüklenecek -->
-  </div>
+<body class="bg-gray-100 min-h-screen">
+  <div id="app" class="max-w-screen-xl mx-auto p-4"></div>
 
   <script>
-    // ✅ Güvenlik kontrolü
-    const isLoggedIn = localStorage.getItem('admin_token') === 'gizli_anahtar';
+    document.addEventListener('DOMContentLoaded', () => {
+      const page = new URLSearchParams(window.location.search).get('page');
+      const isLoggedIn = localStorage.getItem('admin_logged_in') === 'true';
 
-    if (!isLoggedIn) {
-      window.location.href = "index.html"; // ⬅️ Giriş sayfası
-    }
-
-    // ✅ SPA içerik yükleme fonksiyonu
-    const loadPage = (path) => {
-      fetch(path)
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById("app").innerHTML = html;
-        })
-        .catch(() => {
-          document.getElementById("app").innerHTML = "<p>Sayfa yüklenemedi.</p>";
-        });
-    };
-
-    // ✅ URL'deki ?page= değeriyle sayfa belirleme
-    const currentPage = new URLSearchParams(window.location.search).get('page') || 'admin-panel.html';
-    loadPage(`pages/${currentPage}`);
+      if (!isLoggedIn) {
+        window.location.href = 'index.html';
+      } else if (page) {
+        fetch(`pages/${page}`)
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('app').innerHTML = html;
+          })
+          .catch(() => {
+            document.getElementById('app').innerHTML = '<p class="text-red-500">Sayfa yüklenemedi.</p>';
+          });
+      } else {
+        document.getElementById('app').innerHTML = '<p class="text-gray-600">Sayfa bulunamadı.</p>';
+      }
+    });
   </script>
 </body>
 </html>
