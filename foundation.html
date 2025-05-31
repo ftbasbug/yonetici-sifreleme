@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Panel</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yönetici Sayfası</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    #app {
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
-  <div id="app"></div>
+  <div id="app">
+    <!-- SPA içeriği buraya yüklenecek -->
+  </div>
 
   <script>
-    // Güvenlik kontrolü
+    // ✅ Güvenlik kontrolü
     const isLoggedIn = localStorage.getItem('admin_token') === 'gizli_anahtar';
 
     if (!isLoggedIn) {
-      window.location.href = "admin-login.html"; // yetkisizse giriş ekranına yönlendir
+      window.location.href = "index.html"; // ⬅️ Giriş sayfası
     }
 
-    // SPA sayfa yükleme
+    // ✅ SPA içerik yükleme fonksiyonu
     const loadPage = (path) => {
       fetch(path)
         .then(res => res.text())
@@ -29,7 +41,7 @@
         });
     };
 
-    // URL'den hedef sayfa belirle
+    // ✅ URL'deki ?page= değeriyle sayfa belirleme
     const currentPage = new URLSearchParams(window.location.search).get('page') || 'admin-panel.html';
     loadPage(`pages/${currentPage}`);
   </script>
