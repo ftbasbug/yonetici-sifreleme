@@ -2,47 +2,53 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Yönetici Paneli</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel - Foundation</title>
+  <style>
+    /* Basit temel stiller */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9fafb;
+    }
+    #content {
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
-  <div id="app">
-    <!-- Sayfa içeriği buraya yüklenecek -->
-  </div>
+
+  <div id="content">Sayfa yükleniyor...</div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const adminAccessKey = localStorage.getItem('admin_access_key');
-      const page = new URLSearchParams(window.location.search).get('page');
-
-      // ✅ Güvenlik kontrolü: Giriş yapılmamışsa index.html'e yönlendir
-      if (adminAccessKey !== 'secure_admin_login') {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Yetki kontrolü
+      const accessKey = localStorage.getItem('admin_access_key');
+      if (accessKey !== 'secure_admin_login') {
+        alert('Yetkisiz erişim! Giriş sayfasına yönlendiriliyorsunuz.');
         window.location.href = 'index.html';
         return;
       }
 
-      // ✅ SPA sayfa yükleyici: page parametresine göre içerik yükle
-      if (!page) {
-        document.getElementById('app').innerHTML = '<h1>Sayfa bulunamadı</h1>';
-        return;
-      }
+      // URL'den page parametresini al, yoksa default admin-panel.html
+      const urlParams = new URLSearchParams(window.location.search);
+      const page = urlParams.get('page') || 'admin-panel.html';
 
       fetch(`pages/${page}`)
         .then(response => {
-          if (!response.ok) {
-            throw new Error('Sayfa yüklenemedi');
-          }
+          if (!response.ok) throw new Error('Sayfa yüklenemedi');
           return response.text();
         })
         .then(html => {
-          document.getElementById('app').innerHTML = html;
+          document.getElementById('content').innerHTML = html;
         })
-        .catch(error => {
-          console.error(error);
-          document.getElementById('app').innerHTML = '<h1>Sayfa bulunamadı (404)</h1>';
+        .catch(err => {
+          document.getElementById('content').innerHTML = '<p>Sayfa bulunamadı.</p>';
+          console.error(err);
         });
     });
   </script>
+
 </body>
 </html>
