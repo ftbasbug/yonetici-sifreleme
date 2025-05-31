@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>YEEENİ Yönetici Girişi</title>
+  <title>YaNİ Yönetici Girişi</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -74,7 +74,7 @@
       .then(data => {
         if (data.success) {
           localStorage.setItem('admin_access_key', 'secure_admin_login');
-          window.location.href = 'foundation.html?page=uuupages/admin-panel.html';
+          window.location.href = 'foundation.html?page=pages/admin-panel.html';
         } else {
           alert('Kullanıcı adı veya şifre yanlış!');
         }
