@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>YaNİ Yönetici Girişi</title>
+  <title>Yönetici Girişi</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -73,6 +73,7 @@
       .then(res => res.json())
       .then(data => {
         if (data.success) {
+          // Başarılı giriş: localStorage'a anahtar yaz ve yönlendir
           localStorage.setItem('admin_access_key', 'secure_admin_login');
           window.location.href = 'foundation.html?page=pages/admin-panel.html';
         } else {
